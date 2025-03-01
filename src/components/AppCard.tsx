@@ -19,15 +19,15 @@ const AppCard: React.FC<AppCardProps> = ({ app }) => {
   return (
     <div 
       className={cn(
-        "p-4 rounded-lg border border-border bg-card flex items-center",
+        "p-3 md:p-4 rounded-lg border border-border bg-card flex items-center",
         "transition-all duration-300 hover:border-accent/50"
       )}
     >
-      <Avatar className="h-12 w-12 mr-4">
+      <Avatar className="h-10 w-10 md:h-12 md:w-12 mr-3 md:mr-4 flex-shrink-0">
         {app.icon ? (
           <AvatarImage src={app.icon} alt={app.name} />
         ) : (
-          <AvatarFallback className="text-lg bg-accent/10 text-accent-foreground">
+          <AvatarFallback className="text-base md:text-lg bg-accent/10 text-accent-foreground">
             {app.name.charAt(0).toUpperCase()}
           </AvatarFallback>
         )}
@@ -35,9 +35,9 @@ const AppCard: React.FC<AppCardProps> = ({ app }) => {
       
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between">
-          <div>
-            <h3 className="font-medium text-lg truncate">{app.name}</h3>
-            <div className="flex items-center space-x-2 mt-1">
+          <div className="flex-1 min-w-0">
+            <h3 className="font-medium text-base md:text-lg truncate">{app.name}</h3>
+            <div className="flex items-center space-x-2 mt-0.5 md:mt-1">
               <span className="text-xs text-muted-foreground">v{app.version}</span>
               <span className="text-xs text-muted-foreground">•</span>
               <span className="text-xs text-muted-foreground truncate">{app.developer || "Unknown"}</span>
@@ -47,11 +47,11 @@ const AppCard: React.FC<AppCardProps> = ({ app }) => {
           <Button 
             size="sm" 
             variant="outline" 
-            className="ml-2 flex-shrink-0"
+            className="ml-2 flex-shrink-0 text-xs md:text-sm"
             onClick={handleDownload}
           >
-            <Download size={16} className="mr-1" />
-            Download
+            <Download size={14} className="mr-1" />
+            <span className="hidden xs:inline">Download</span>
           </Button>
         </div>
       </div>

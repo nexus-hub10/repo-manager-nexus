@@ -13,7 +13,7 @@ const RepoManager: React.FC = () => {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
+    <div className="max-w-3xl mx-auto p-2 md:p-6">
       {selectedRepo ? (
         // App list view for the selected repository
         <AppList 
@@ -24,8 +24,8 @@ const RepoManager: React.FC = () => {
       ) : (
         // Repository list view
         <>
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-semibold tracking-tight">Repositories</h1>
+          <div className="flex items-center justify-between mb-4 md:mb-6">
+            <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">Repositories</h1>
             <Button 
               onClick={() => setIsAddDialogOpen(true)}
               className="rounded-full"
@@ -35,9 +35,9 @@ const RepoManager: React.FC = () => {
             </Button>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             {repositories.length === 0 ? (
-              <div className="py-16 text-center">
+              <div className="py-10 md:py-16 text-center">
                 <p className="text-muted-foreground mb-4">No repositories added yet.</p>
                 <Button
                   onClick={() => setIsAddDialogOpen(true)}
