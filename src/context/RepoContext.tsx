@@ -82,8 +82,8 @@ export const RepoProvider: React.FC<{ children: React.ReactNode }> = ({ children
         apps = data.map((app: any) => ({
           name: app.name || app.nome || "Unknown App",
           version: app.version || app.versione || "0.0.0",
-          developer: app.developer || app.sviluppatore || undefined,
-          downloadUrl: app.downloadUrl || app.download || app.link || "",
+          developer: app.developer || app.developerName || app.sviluppatore || "Unknown",
+          downloadUrl: app.downloadUrl || app.downloadURL || app.download || app.link || "",
           bundleId: app.bundleId || app.bundle_id || undefined,
           icon: app.icon || undefined
         }));
@@ -92,8 +92,8 @@ export const RepoProvider: React.FC<{ children: React.ReactNode }> = ({ children
         apps = data.apps.map((app: any) => ({
           name: app.name || app.nome || "Unknown App",
           version: app.version || app.versione || "0.0.0",
-          developer: app.developer || app.sviluppatore || undefined,
-          downloadUrl: app.downloadUrl || app.download || app.link || "",
+          developer: app.developer || app.developerName || app.sviluppatore || "Unknown",
+          downloadUrl: app.downloadUrl || app.downloadURL || app.download || app.link || "",
           bundleId: app.bundleId || app.bundle_id || undefined,
           icon: app.icon || undefined
         }));
@@ -107,8 +107,8 @@ export const RepoProvider: React.FC<{ children: React.ReactNode }> = ({ children
           apps = data[arrayProp].map((app: any) => ({
             name: app.name || app.nome || "Unknown App",
             version: app.version || app.versione || "0.0.0",
-            developer: app.developer || app.sviluppatore || undefined,
-            downloadUrl: app.downloadUrl || app.download || app.link || "",
+            developer: app.developer || app.developerName || app.sviluppatore || "Unknown",
+            downloadUrl: app.downloadUrl || app.downloadURL || app.download || app.link || "",
             bundleId: app.bundleId || app.bundle_id || undefined,
             icon: app.icon || undefined
           }));

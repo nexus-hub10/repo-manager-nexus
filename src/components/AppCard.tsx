@@ -11,6 +11,11 @@ interface AppCardProps {
 }
 
 const AppCard: React.FC<AppCardProps> = ({ app }) => {
+  const handleDownload = () => {
+    // Open the download URL in a new tab
+    window.open(app.downloadUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div 
       className={cn(
@@ -43,7 +48,7 @@ const AppCard: React.FC<AppCardProps> = ({ app }) => {
             size="sm" 
             variant="outline" 
             className="ml-2 flex-shrink-0"
-            onClick={() => window.open(app.downloadUrl, '_blank', 'noopener,noreferrer')}
+            onClick={handleDownload}
           >
             <Download size={16} className="mr-1" />
             Download
