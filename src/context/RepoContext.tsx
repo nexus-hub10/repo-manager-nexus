@@ -55,26 +55,65 @@ export const RepoProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return;
       }
 
+      // Use CORS proxy if needed
+      const proxyUrl = url.startsWith('http') ? `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}` : url;
+      
       // Fetch repository data
-      const response = await fetch(url);
+      console.log("Fetching from:", proxyUrl);
+      const response = await fetch(proxyUrl);
+      
       if (!response.ok) {
-        throw new Error("Failed to fetch repository");
+        throw new Error(`Failed to fetch repository: ${response.status} ${response.statusText}`);
       }
       
       const data = await response.json();
-      const repoName = data.name || new URL(url).hostname;
+      console.log("Repository data:", data);
+      
+      // Extract repo name from the url or data
+      const urlObj = new URL(url);
+      const hostName = urlObj.hostname.split('.').slice(-2, -1)[0]; // Extract domain name without TLD
+      const repoName = data.repoName || data.name || `${hostName.charAt(0).toUpperCase() + hostName.slice(1)} Repo`;
       
       // Extract apps from the repository data
-      const apps: App[] = Array.isArray(data.apps) 
-        ? data.apps.map((app: any) => ({
-            name: app.name || "Unknown App",
-            version: app.version || "0.0.0",
-            developer: app.developer || undefined,
-            downloadUrl: app.downloadUrl || app.download || "",
+      let apps: App[] = [];
+      
+      if (Array.isArray(data)) {
+        // If data is directly an array of apps
+        apps = data.map((app: any) => ({
+          name: app.name || app.nome || "Unknown App",
+          version: app.version || app.versione || "0.0.0",
+          developer: app.developer || app.sviluppatore || undefined,
+          downloadUrl: app.downloadUrl || app.download || app.link || "",
+          bundleId: app.bundleId || app.bundle_id || undefined,
+          icon: app.icon || undefined
+        }));
+      } else if (data.apps && Array.isArray(data.apps)) {
+        // If data has an "apps" property that is an array
+        apps = data.apps.map((app: any) => ({
+          name: app.name || app.nome || "Unknown App",
+          version: app.version || app.versione || "0.0.0",
+          developer: app.developer || app.sviluppatore || undefined,
+          downloadUrl: app.downloadUrl || app.download || app.link || "",
+          bundleId: app.bundleId || app.bundle_id || undefined,
+          icon: app.icon || undefined
+        }));
+      } else {
+        // Try to find any array property that might contain apps
+        const possibleArrayProps = Object.keys(data).filter(key => Array.isArray(data[key]));
+        
+        if (possibleArrayProps.length > 0) {
+          // Use the first array found
+          const arrayProp = possibleArrayProps[0];
+          apps = data[arrayProp].map((app: any) => ({
+            name: app.name || app.nome || "Unknown App",
+            version: app.version || app.versione || "0.0.0",
+            developer: app.developer || app.sviluppatore || undefined,
+            downloadUrl: app.downloadUrl || app.download || app.link || "",
             bundleId: app.bundleId || app.bundle_id || undefined,
             icon: app.icon || undefined
-          }))
-        : [];
+          }));
+        }
+      }
 
       const newRepo: Repository = {
         id: Date.now().toString(),
@@ -83,6 +122,7 @@ export const RepoProvider: React.FC<{ children: React.ReactNode }> = ({ children
         apps
       };
 
+      console.log("New repository:", newRepo);
       setRepositories((prevRepos) => [...prevRepos, newRepo]);
       toast.success("Repository added successfully");
     } catch (error) {
