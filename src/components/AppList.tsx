@@ -13,6 +13,11 @@ interface AppListProps {
 }
 
 const AppList: React.FC<AppListProps> = ({ repository, onBack, onDelete }) => {
+  // Sort apps alphabetically by name
+  const sortedApps = [...repository.apps].sort((a, b) => 
+    a.name.localeCompare(b.name)
+  );
+
   return (
     <div className="animate-fade-in">
       <div className="mb-6 flex items-center justify-between">
@@ -37,12 +42,12 @@ const AppList: React.FC<AppListProps> = ({ repository, onBack, onDelete }) => {
       </Button>
       
       <div className="space-y-4">
-        {repository.apps.length === 0 ? (
+        {sortedApps.length === 0 ? (
           <div className="py-12 text-center">
             <p className="text-muted-foreground">This repository doesn't contain any apps.</p>
           </div>
         ) : (
-          repository.apps.map((app, index) => (
+          sortedApps.map((app, index) => (
             <AppCard key={`${app.name}-${index}`} app={app} />
           ))
         )}

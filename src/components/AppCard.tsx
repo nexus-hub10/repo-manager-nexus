@@ -34,12 +34,8 @@ const AppCard: React.FC<AppCardProps> = ({ app }) => {
             <h3 className="font-medium text-lg truncate">{app.name}</h3>
             <div className="flex items-center space-x-2 mt-1">
               <span className="text-xs text-muted-foreground">v{app.version}</span>
-              {app.developer && (
-                <>
-                  <span className="text-xs text-muted-foreground">•</span>
-                  <span className="text-xs text-muted-foreground truncate">{app.developer}</span>
-                </>
-              )}
+              <span className="text-xs text-muted-foreground">•</span>
+              <span className="text-xs text-muted-foreground truncate">{app.developer || "Unknown"}</span>
             </div>
           </div>
           
@@ -47,12 +43,10 @@ const AppCard: React.FC<AppCardProps> = ({ app }) => {
             size="sm" 
             variant="outline" 
             className="ml-2 flex-shrink-0"
-            asChild
+            onClick={() => window.open(app.downloadUrl, '_blank', 'noopener,noreferrer')}
           >
-            <a href={app.downloadUrl} target="_blank" rel="noopener noreferrer">
-              <Download size={16} className="mr-1" />
-              Download
-            </a>
+            <Download size={16} className="mr-1" />
+            Download
           </Button>
         </div>
       </div>
