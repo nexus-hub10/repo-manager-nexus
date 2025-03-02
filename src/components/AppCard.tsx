@@ -1,4 +1,3 @@
-
 import React from "react";
 import { App } from "@/types";
 import { Button } from "@/components/ui/button";
@@ -23,11 +22,11 @@ const AppCard: React.FC<AppCardProps> = ({ app }) => {
         "transition-all duration-300 hover:border-accent/50"
       )}
     >
-      <Avatar className="h-10 w-10 md:h-12 md:w-12 mr-3 md:mr-4 flex-shrink-0">
-        {app.icon ? (
-          <AvatarImage src={app.icon} alt={app.name} />
+      <Avatar className="h-10 w-10 md:h-12 md:w-12 mr-3 md:mr-4 flex-shrink-0 rounded-full overflow-hidden">
+        {app.iconUrl ? (
+          <AvatarImage src={app.iconUrl} alt={app.name} className="rounded-full object-cover" />
         ) : (
-          <AvatarFallback className="text-base md:text-lg bg-accent/10 text-accent-foreground">
+          <AvatarFallback className="text-base md:text-lg bg-accent/10 text-accent-foreground rounded-full">
             {app.name.charAt(0).toUpperCase()}
           </AvatarFallback>
         )}
