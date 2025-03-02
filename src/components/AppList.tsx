@@ -3,7 +3,7 @@ import React from "react";
 import { Repository } from "@/types";
 import AppCard from "./AppCard";
 import { Button } from "@/components/ui/button";
-import { X, ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AppListProps {
@@ -26,11 +26,16 @@ const AppList: React.FC<AppListProps> = ({ repository, onBack, onDelete }) => {
             <h1 className="text-xl md:text-2xl font-semibold tracking-tight truncate">{repository.name}</h1>
             <p className="text-xs md:text-sm text-muted-foreground mt-1 truncate">{repository.url}</p>
           </div>
-          
-          <Button variant="destructive" size="icon" onClick={onDelete} className="ml-2 flex-shrink-0">
-            <X size={18} />
-          </Button>
         </div>
+        
+        <Button
+          variant="destructive"
+          size="default"
+          className="mb-3 w-full"
+          onClick={onDelete}
+        >
+          Delete Repository
+        </Button>
         
         <Button
           variant="outline"
