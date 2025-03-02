@@ -5,15 +5,21 @@ import RepoCard from "./RepoCard";
 import AppList from "./AppList";
 import AddRepoDialog from "./AddRepoDialog";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 
 const RepoManager: React.FC = () => {
   const { repositories, selectedRepo, selectRepository, deleteRepository } = useRepoContext();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   return (
-    <div className="max-w-3xl mx-auto p-2 md:p-6">
+    <div className="animate-fade-in">
       {selectedRepo ? (
         // App list view for the selected repository
         <AppList 
@@ -26,13 +32,23 @@ const RepoManager: React.FC = () => {
         <>
           <div className="flex items-center justify-between mb-4 md:mb-6">
             <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">Repositories</h1>
-            <Button 
-              onClick={() => setIsAddDialogOpen(true)}
-              className="rounded-full"
-              size="icon"
-            >
-              <Plus size={20} />
-            </Button>
+            <div className="flex space-x-2">
+              <Button 
+                variant="outline"
+                size="icon"
+                onClick={toggleTheme}
+                className="rounded-full"
+              >
+                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+              </Button>
+              <Button 
+                onClick={() => setIsAddDialogOpen(true)}
+                className="rounded-full"
+                size="icon"
+              >
+                <Plus size={20} />
+              </Button>
+            </div>
           </div>
           
           <div className="space-y-3 md:space-y-4">
